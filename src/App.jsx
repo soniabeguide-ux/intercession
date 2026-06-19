@@ -45,7 +45,7 @@ const IC = {
 // ── Supabase ──────────────────────────────────────────────────────────────────
 const H = { apikey: SUPA_KEY, Authorization: `Bearer ${SUPA_KEY}`, "Content-Type": "application/json" };
 async function sbGet(table)       { try { const r = await fetch(`${SUPA_URL}/rest/v1/${table}?select=*&order=created_at.desc`,{headers:H}); return r.ok?r.json():[] } catch{return[]} }
-async function sbPost(table,data) { try { const r = await fetch(`${SUPA_URL}/rest/v1/${table}`,{method:"POST",headers:{...H,Prefer:"return=representation"},body:JSON.stringify(data)}); return r.ok?r.json():null } catch{return null} }
+async function sbPost(table,data) { try { const r = await fetch(`${SUPA_URL}/rest/v1/${table}`,{method:"POST",headers:{...H,Prefer:"return=representation"},body:JSON.stringify(data)}); if(!r.ok){const t=await r.text();console.error("Supabase POST error",r.status,t);return {__error:true,status:r.status,detail:t}} return r.json() } catch(e){console.error("Supabase POST network error",e);return {__error:true,status:0,detail:String(e)}} }
 async function sbPatch(table,id,d){ try { const r = await fetch(`${SUPA_URL}/rest/v1/${table}?id=eq.${id}`,{method:"PATCH",headers:H,body:JSON.stringify(d)}); return r.ok } catch{return false} }
 async function sbDel(table,id)    { try { const r = await fetch(`${SUPA_URL}/rest/v1/${table}?id=eq.${id}`,{method:"DELETE",headers:H}); return r.ok } catch{return false} }
 
@@ -305,7 +305,8 @@ function AddForm({ onAdd, isPersonal, defaultCat, T }) {
     const payload = {...f, name:f.name.trim(), request:f.request.trim(), notes:f.notes.trim(), versets:versetsClean};
     const res = await sbPost(tbl, payload);
     setSaving(false);
-    if(res?.[0]){onAdd(res[0]);setF(empty);setOpen(false);}
+    if(res?.__error){ alert(`Erreur d'enregistrement (${res.status}) :\n${res.detail}`); return; }
+    if(res?.[0]){onAdd(res[0]);setF(empty);setOpen(false);} else { alert("Erreur inconnue : l'enregistrement n'a renvoyé aucune donnée."); }
   };
 
   const inp = {width:"100%",padding:"9px 12px",fontSize:13.5,background:T.bg,border:`1px solid ${T.border}`,borderRadius:8,color:T.text,outline:"none"};
