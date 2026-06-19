@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 
-const SUPA_URL = "https://finjxgiymcqldiqspqly.supabase.co";
-const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpbmp4Z2l5bWNxbGRpcXNwcWx5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NDI1MDIsImV4cCI6MjA5NTAxODUwMn0.LDbQqEClpUxX_p9VyzeVfJ5N1Ac6rEK7Ax0Qkz2oWPk";
+const SUPA_URL = "https://oaxxmkukmbcbudhizmpv.supabase.co";
+const SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9heHhta3VrbWJjYnVkaGl6bXB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NjcwMzgsImV4cCI6MjA5NTQ0MzAzOH0.21146NDPGPQ0IRfvxgPDnary6CT9lrx_ZvTN9hG4oNk";
 const SITE_PWD  = "pfyl2026";
 const PERSO_PWD = "pfylperso2026";
 
